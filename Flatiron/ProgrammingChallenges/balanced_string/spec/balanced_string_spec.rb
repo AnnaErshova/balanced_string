@@ -1,31 +1,47 @@
 
 require_relative './spec_helper.rb'
 
-describe "balanced string" do
+describe 'balanced?' do
 
-  it 'returns "true" when the string is balanced' do
-    string_1 = balanced?('st(r)i()ng')
-    expect(string_1).to eq(true)
+  context 'string is balanced:' do
+    it 'returns "true" when the string is balanced' do
+      string_1 = balanced?('st(r)i()ng')
+      expect(string_1).to eq(true)
+    end
+    it 'returns "true" when the string is balanced' do
+      string_2 = balanced?('st(r())i()ng')
+      expect(string_2).to eq(true)
+    end
+    it 'returns "true" when the string has no parentheses at all' do
+      string_3 = balanced?('string')
+      expect(string_3).to eq(true)
+    end
+    it 'returns "true" when the string is empty' do
+      string_3 = balanced?('')
+      expect(string_3).to eq(true)
+    end
   end
 
-  it 'returns "true" when the string is has no parentheses' do
-    string_2 = balanced?('string')
-    expect(string_2).to eq(true)
+  context 'string is unbalanced:' do
+    it 'returns "false" when the string is not balanced' do
+      string_4 = balanced?('strin(g')
+      expect(string_4).to eq(false)
+    end
+    it 'returns "false" when the string is not balanced' do
+      string_5 = balanced?('st()((((rin(g')
+      expect(string_5).to eq(false)
+    end
   end
 
-  it 'returns "false" when the string is not balanced' do
-    string_3 = balanced?('strin(g')
-    expect(string_3).to eq(false)
+  context 'string is invalid:' do
+    it 'returns "invalid" when the first parentheses is )' do
+      string_6 = balanced?('str)(()ing')
+      expect(string_6).to eq("invalid")
+    end
+    it 'returns "invalid" when the last parentheses is (' do
+      string_7 = balanced?('str())((ing')
+      expect(string_7).to eq("invalid")
+    end
   end
 
-  it 'returns "invalid" when the string starts with )' do
-    string_4 = balanced?('str)(()ing')
-    expect(string_4).to eq("invalid")
-  end
-
-  it 'returns "invalid" when the string ends with (' do
-    string_5 = balanced?('str())((ing')
-    expect(string_5).to eq("invalid")
-  end
-  
 end
